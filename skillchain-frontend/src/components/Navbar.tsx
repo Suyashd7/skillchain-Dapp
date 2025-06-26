@@ -1,6 +1,11 @@
-import { Box, Flex, HStack, Button, Link, Spacer, useBreakpointValue, Text } from '@chakra-ui/react';
+import { Box, Flex, HStack, Button, Link, Spacer, useBreakpointValue, Text, IconButton, useDisclosure, VStack, Drawer, DrawerOverlay, DrawerContent, DrawerCloseButton, DrawerHeader, DrawerBody } from '@chakra-ui/react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useWallet } from './WalletContext';
+import { motion } from 'framer-motion';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
+
+const MotionBox = motion(Box);
 
 const navLinks = [
   { label: 'Home', path: '/' },
@@ -15,47 +20,218 @@ const shorten = (addr: string) => addr.slice(0, 6) + '...' + addr.slice(-4);
 const Navbar = () => {
   const navigate = useNavigate();
   const { walletAddress, connectWallet, disconnectWallet } = useWallet();
-  const showLabels = useBreakpointValue({ base: false, md: true });
+  const showLabels = useBreakpointValue({ base: false, lg: true });
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
-    <Box as="nav" w="100%" bg="#fff" boxShadow="0 2px 16px 0 #E5E4E233" px={6} py={3} position="sticky" top={0} zIndex={100} fontFamily="'Inter', 'Poppins', sans-serif">
+    <MotionBox
+      as="nav"
+      w="100%"
+      className="glass-navbar"
+      px={6}
+      py={4}
+      position="sticky"
+      top={0}
+      zIndex={100}
+      fontFamily="'Inter', sans-serif"
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+    >
       <Flex align="center" maxW="container.xl" mx="auto">
-        <Box fontWeight="bold" fontSize="xl" color="#FFD700" cursor="pointer" onClick={() => navigate('/')}>SkillChain</Box>
-        <HStack spacing={6} ml={8} display={{ base: 'none', md: 'flex' }}>
-          {navLinks.map(link => (
-            <Link
-              as={NavLink}
+        <MotionBox
+          fontWeight="bold"
+          fontSize="2xl"
+          className="gradient-text"
+          cursor="pointer"
+          onClick={() => navigate('/')}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          SkillChain
+        </MotionBox>
+
+        {/* Desktop Navigation */}
+        <HStack spacing={8} ml={12} display={{ base: 'none', lg: 'flex' }}>
+          {navLinks.map((link, index) => (
+            <MotionBox
               key={link.path}
-              to={link.path}
-              px={3}
-              py={1}
-              borderRadius="md"
-              fontWeight="500"
-              color="#181818"
-              _activeLink={{ color: '#FFD700', fontWeight: 'bold' }}
-              _hover={{ color: '#FFD700', textDecoration: 'none' }}
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 + 0.3 }}
             >
-              {link.label}
-            </Link>
+              <Link
+                as={NavLink}
+                to={link.path}
+                px={4}
+                py={2}
+                borderRadius="full"
+                fontWeight="500"
+                color="white"
+                _activeLink={{ 
+                  background: 'rgba(255, 255, 255, 0.2)',
+                  fontWeight: 'bold',
+                  backdropFilter: 'blur(10px)'
+                }}
+                _hover={{ 
+                  background: 'rgba(255, 255, 255, 0.1)',
+                  textDecoration: 'none',
+                  backdropFilter: 'blur(10px)'
+                }}
+                transition="all 0.3s ease"
+              >
+                {link.label}
+              </Link>
+            </MotionBox>
           ))}
         </HStack>
+
         <Spacer />
-        {walletAddress ? (
-          <HStack spacing={2}>
-            <Button size="md" borderRadius="full" bg="#FFFBEA" color="#181818" border="1.5px solid #FFD700" _hover={{ bg: '#FFD700', color: '#181818' }} boxShadow="0 2px 8px 0 #FFD70033" cursor="default">
-              <Text fontWeight="bold">{shorten(walletAddress)}</Text>
-            </Button>
-            <Button size="md" borderRadius="full" variant="outline" borderColor="#FFD700" color="#FFD700" _hover={{ bg: '#FFFBEA' }} onClick={disconnectWallet}>
-              Disconnect
-            </Button>
-          </HStack>
-        ) : (
-          <Button size="md" borderRadius="full" bg="#FFD700" color="#181818" _hover={{ bg: '#E5C100' }} boxShadow="0 2px 8px 0 #FFD70033" onClick={connectWallet}>
-            Connect Wallet
-          </Button>
-        )}
+
+        {/* Desktop Wallet Controls */}
+        <HStack spacing={4} display={{ base: 'none', lg: 'flex' }}>
+          {walletAddress ? (
+            <>
+              <MotionBox
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Button
+                  size="md"
+                  borderRadius="full"
+                  className="glass"
+                  color="white"
+                  fontWeight="bold"
+                  cursor="default"
+                  _hover={{ background: 'rgba(255, 255, 255, 0.2)' }}
+                >
+                  {shorten(walletAddress)}
+                </Button>
+              </MotionBox>
+              <MotionBox
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Button
+                  size="md"
+                  borderRadius="full"
+                  variant="outline"
+                  borderColor="rgba(255, 255, 255, 0.3)"
+                  color="white"
+                  _hover={{ 
+                    background: 'rgba(255, 255, 255, 0.1)',
+                    borderColor: 'rgba(255, 255, 255, 0.5)'
+                  }}
+                  onClick={disconnectWallet}
+                >
+                  Disconnect
+                </Button>
+              </MotionBox>
+            </>
+          ) : (
+            <MotionBox
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Button
+                size="md"
+                borderRadius="full"
+                className="premium-btn"
+                onClick={connectWallet}
+              >
+                Connect Wallet
+              </Button>
+            </MotionBox>
+          )}
+        </HStack>
+
+        {/* Mobile Menu Button */}
+        <IconButton
+          display={{ base: 'flex', lg: 'none' }}
+          aria-label="Open menu"
+          icon={<FontAwesomeIcon icon={faBars} />}
+          variant="ghost"
+          color="white"
+          onClick={onOpen}
+          _hover={{ background: 'rgba(255, 255, 255, 0.1)' }}
+        />
+
+        {/* Mobile Drawer */}
+        <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
+          <DrawerOverlay />
+          <DrawerContent className="glass" color="white">
+            <DrawerCloseButton />
+            <DrawerHeader className="gradient-text" fontSize="xl" fontWeight="bold">
+              SkillChain
+            </DrawerHeader>
+            <DrawerBody>
+              <VStack spacing={6} align="stretch">
+                {navLinks.map(link => (
+                  <Link
+                    key={link.path}
+                    as={NavLink}
+                    to={link.path}
+                    px={4}
+                    py={3}
+                    borderRadius="lg"
+                    fontWeight="500"
+                    color="white"
+                    _activeLink={{ 
+                      background: 'rgba(255, 255, 255, 0.2)',
+                      fontWeight: 'bold'
+                    }}
+                    _hover={{ 
+                      background: 'rgba(255, 255, 255, 0.1)',
+                      textDecoration: 'none'
+                    }}
+                    onClick={onClose}
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+                <Box pt={4} borderTop="1px solid rgba(255, 255, 255, 0.2)">
+                  {walletAddress ? (
+                    <VStack spacing={3}>
+                      <Text fontSize="sm" color="rgba(255, 255, 255, 0.8)">
+                        {shorten(walletAddress)}
+                      </Text>
+                      <Button
+                        size="sm"
+                        borderRadius="full"
+                        variant="outline"
+                        borderColor="rgba(255, 255, 255, 0.3)"
+                        color="white"
+                        w="full"
+                        onClick={() => {
+                          disconnectWallet();
+                          onClose();
+                        }}
+                      >
+                        Disconnect
+                      </Button>
+                    </VStack>
+                  ) : (
+                    <Button
+                      size="md"
+                      borderRadius="full"
+                      className="premium-btn"
+                      w="full"
+                      onClick={() => {
+                        connectWallet();
+                        onClose();
+                      }}
+                    >
+                      Connect Wallet
+                    </Button>
+                  )}
+                </Box>
+              </VStack>
+            </DrawerBody>
+          </DrawerContent>
+        </Drawer>
       </Flex>
-    </Box>
+    </MotionBox>
   );
 };
 
-export default Navbar; 
+export default Navbar;
