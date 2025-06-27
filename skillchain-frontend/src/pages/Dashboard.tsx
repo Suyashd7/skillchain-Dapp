@@ -119,7 +119,7 @@ const Dashboard = () => {
   };
 
   return (
-    <Box minH="100vh" position="relative">
+    <Box minH="100vh" position="relative" bg="#0f0f23">
       <Box className="animated-bg" />
       
       <Container maxW="container.xl" py={{ base: 8, md: 16 }}>
@@ -170,6 +170,7 @@ const Dashboard = () => {
                         borderRadius="full"
                         className="premium-btn"
                         onClick={connectWallet}
+                        color="white"
                       >
                         Connect Wallet
                       </Button>
@@ -183,7 +184,7 @@ const Dashboard = () => {
             {walletAddress && (
               <MotionBox variants={itemVariants} w="100%">
                 <SimpleGrid columns={{ base: 1, md: 3 }} spacing={6}>
-                  <Box className="glass-card" p={6}>
+                  <Box className="stats-card">
                     <Stat>
                       <StatLabel color="rgba(255, 255, 255, 0.8)">
                         Total Projects
@@ -197,7 +198,7 @@ const Dashboard = () => {
                     </Stat>
                   </Box>
                   
-                  <Box className="glass-card" p={6}>
+                  <Box className="stats-card">
                     <Stat>
                       <StatLabel color="rgba(255, 255, 255, 0.8)">
                         My Projects
@@ -211,7 +212,7 @@ const Dashboard = () => {
                     </Stat>
                   </Box>
                   
-                  <Box className="glass-card" p={6}>
+                  <Box className="stats-card">
                     <Stat>
                       <StatLabel color="rgba(255, 255, 255, 0.8)">
                         Domains
@@ -256,7 +257,7 @@ const Dashboard = () => {
                         transition="all 0.3s ease"
                         _hover={{
                           transform: 'translateY(-8px)',
-                          boxShadow: '0 20px 60px 0 rgba(31, 38, 135, 0.5)'
+                          boxShadow: '0 20px 60px 0 rgba(0, 0, 0, 0.5)'
                         }}
                       >
                         <VStack spacing={4}>
@@ -274,13 +275,7 @@ const Dashboard = () => {
                           <Button
                             size="sm"
                             borderRadius="full"
-                            variant="outline"
-                            borderColor="rgba(255, 255, 255, 0.3)"
-                            color="white"
-                            _hover={{ 
-                              background: 'rgba(255, 255, 255, 0.1)',
-                              borderColor: 'rgba(255, 255, 255, 0.5)'
-                            }}
+                            className="outline-btn"
                           >
                             Get Started
                           </Button>

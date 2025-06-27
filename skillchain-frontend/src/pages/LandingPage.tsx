@@ -8,7 +8,6 @@ import {
   Button, 
   SimpleGrid,
   Flex,
-  Icon,
   useBreakpointValue
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
@@ -51,7 +50,7 @@ const LandingPage = () => {
           scale: 1.0,
           scaleMobile: 1.0,
           color: 0x667eea,
-          backgroundColor: 0x764ba2,
+          backgroundColor: 0x0f0f23,
           points: 8.0,
           maxDistance: 25.0,
           spacing: 20.0,
@@ -110,7 +109,7 @@ const LandingPage = () => {
   };
 
   return (
-    <Box minH="100vh" position="relative" overflow="hidden">
+    <Box minH="100vh" position="relative" overflow="hidden" bg="#0f0f23">
       {/* Animated Background */}
       <Box className="animated-bg" />
       
@@ -181,6 +180,7 @@ const LandingPage = () => {
                     fontWeight="bold"
                     className="premium-btn"
                     onClick={() => navigate('/dashboard')}
+                    color="white"
                   >
                     {shorten(walletAddress)} - Dashboard
                   </Button>
@@ -199,6 +199,7 @@ const LandingPage = () => {
                     fontWeight="bold"
                     className="premium-btn"
                     onClick={connectWallet}
+                    color="white"
                   >
                     Connect Wallet
                   </Button>
@@ -216,13 +217,7 @@ const LandingPage = () => {
                   py={6}
                   fontSize="lg"
                   fontWeight="bold"
-                  variant="outline"
-                  borderColor="rgba(255, 255, 255, 0.3)"
-                  color="white"
-                  _hover={{ 
-                    background: 'rgba(255, 255, 255, 0.1)',
-                    borderColor: 'rgba(255, 255, 255, 0.5)'
-                  }}
+                  className="outline-btn"
                   onClick={() => navigate('/explore')}
                 >
                   Explore Projects
@@ -319,13 +314,7 @@ const LandingPage = () => {
                       <Button
                         size="sm"
                         borderRadius="full"
-                        variant="outline"
-                        borderColor="rgba(255, 255, 255, 0.3)"
-                        color="white"
-                        _hover={{ 
-                          background: 'rgba(255, 255, 255, 0.1)',
-                          borderColor: 'rgba(255, 255, 255, 0.5)'
-                        }}
+                        className="outline-btn"
                         w="100%"
                       >
                         Get Started
@@ -454,6 +443,7 @@ const LandingPage = () => {
                     fontWeight="bold"
                     className="premium-btn"
                     onClick={() => navigate('/submit')}
+                    color="white"
                   >
                     Start Creating
                   </Button>
@@ -470,13 +460,7 @@ const LandingPage = () => {
                     py={6}
                     fontSize="lg"
                     fontWeight="bold"
-                    variant="outline"
-                    borderColor="rgba(255, 255, 255, 0.3)"
-                    color="white"
-                    _hover={{ 
-                      background: 'rgba(255, 255, 255, 0.1)',
-                      borderColor: 'rgba(255, 255, 255, 0.5)'
-                    }}
+                    className="outline-btn"
                     onClick={() => navigate('/explore')}
                   >
                     View Examples
