@@ -23,8 +23,11 @@ function App() {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
         minH="100vh"
+        bg="#0f0f23"
+        color="white"
         fontFamily="'Inter', sans-serif"
       >
+        <Box className="animated-bg" />
         <Navbar />
         <Routes>
           <Route path="/" element={<LandingPage />} />
